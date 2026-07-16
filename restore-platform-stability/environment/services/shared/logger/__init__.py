@@ -1,3 +1,3 @@
-from services.shared.logger.logger import RequestLogger, flask_logging_middleware
+from shared.logger.custom_logger import setup_logger
 
-__all__ = ["RequestLogger", "flask_logging_middleware"]
+__all__ = ["setup_logger"]

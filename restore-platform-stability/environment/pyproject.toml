@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=70.0", "wheel>=0.43"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "restore-platform-stability"
+version = "0.1.0"
+description = "Production-grade distributed e-commerce platform for Triton benchmark simulation."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+]
+ignore = [
+    "E501",  # line too long — handled by formatter
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+
+[tool.ruff.isort]
+known-first-party = [
+    "gateway",
+    "orders",
+    "payments",
+    "inventory",
+    "shared",
+]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+ignore_missing_imports = true
+disallow_untyped_defs = true
+disallow_any_generics = true
+warn_return_any = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = [
+    "services/gateway/tests",
+    "services/orders/tests",
+    "services/payments/tests",
+    "services/inventory/tests",
+]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+log_cli = true
+log_cli_level = "INFO"

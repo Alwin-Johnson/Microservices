@@ -1,3 +1,3 @@
-from services.shared.middleware.fault_injection import install
+from shared.middleware.logging import LoggingMiddleware
 
-__all__ = ["install"]
+__all__ = ["LoggingMiddleware"]

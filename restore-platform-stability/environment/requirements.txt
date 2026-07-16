@@ -1,8 +1,19 @@
-# Packages needed by services/shared/{logger,metrics,middleware,tracing}
-# and workload/replay_generator.py.
+# ==============================================================================
+# Root requirements.txt — Developer Tooling
 #
-# Not merged into environment/requirements.txt automatically -- add
-# these lines there (owned by infra) rather than installing separately:
-prometheus-client>=0.20
-requests>=2.31
-flask>=3.0
+# This file is for development tooling only.
+# Each service has its own requirements.txt under services/<name>/requirements.txt.
+# Install service dependencies from there for service-specific development.
+# ==============================================================================
+
+# Code quality
+ruff==0.9.1
+mypy==1.14.1
+
+# Testing
+pytest==8.3.4
+pytest-asyncio==0.25.2
+pytest-cov==6.0.0
+
+# Type stubs
+types-redis==4.6.0.20241004
