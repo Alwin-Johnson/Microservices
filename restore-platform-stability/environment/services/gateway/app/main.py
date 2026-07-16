@@ -13,6 +13,10 @@ def create_app() -> FastAPI:
     """Create and configure the FastAPI application."""
     app = FastAPI(title="Gateway Service")
     app.include_router(health_router)
+    from app.api.proxy import router as proxy_router
+    app.include_router(proxy_router)
+    from app.api.checkout import router as checkout_router
+    app.include_router(checkout_router)
     return app
 
 app = create_app()
