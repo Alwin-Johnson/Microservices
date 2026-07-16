@@ -1,0 +1,17 @@
+{
+  "name": "failure_replay",
+  "description": "Reproduces the production incident: a sustained burst of checkout traffic well above baseline rate, long enough to exhaust the simulated resource pool and trigger retry amplification.",
+  "duration_seconds": 300,
+  "target_base_url": "http://gateway:8080",
+  "phases": [
+    {"label": "ramp", "start_s": 0, "end_s": 30, "requests_per_second": 4},
+    {"label": "burst", "start_s": 30, "end_s": 240, "requests_per_second": 22},
+    {"label": "cooldown", "start_s": 240, "end_s": 300, "requests_per_second": 4}
+  ],
+  "endpoints": [
+    {"method": "POST", "path": "/checkout", "weight": 8, "payload_template": "checkout_small"},
+    {"method": "GET", "path": "/orders/{order_id}", "weight": 2},
+    {"method": "GET", "path": "/inventory/{sku}", "weight": 1}
+  ],
+  "seed": 1337
+}

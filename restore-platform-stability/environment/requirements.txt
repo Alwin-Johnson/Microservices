@@ -1,0 +1,8 @@
+# Packages needed by services/shared/{logger,metrics,middleware,tracing}
+# and workload/replay_generator.py.
+#
+# Not merged into environment/requirements.txt automatically -- add
+# these lines there (owned by infra) rather than installing separately:
+prometheus-client>=0.20
+requests>=2.31
+flask>=3.0

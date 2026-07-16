@@ -1,0 +1,16 @@
+{
+  "name": "baseline",
+  "description": "Steady low-volume traffic representative of normal operating conditions. Must never trip the seeded incident.",
+  "duration_seconds": 120,
+  "target_base_url": "http://gateway:8080",
+  "arrival": {
+    "type": "poisson",
+    "requests_per_second": 4
+  },
+  "endpoints": [
+    {"method": "POST", "path": "/checkout", "weight": 5, "payload_template": "checkout_small"},
+    {"method": "GET", "path": "/orders/{order_id}", "weight": 3},
+    {"method": "GET", "path": "/inventory/{sku}", "weight": 2}
+  ],
+  "seed": 42
+}
