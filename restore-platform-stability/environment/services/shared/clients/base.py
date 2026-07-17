@@ -65,9 +65,6 @@ class BaseHttpClient:
 
                 if response.status_code >= 500:
                     if attempt < max_retries - 1:
-                        # Exponential backoff with jitter
-                        delay = (2**attempt) + random.uniform(0, 1)
-                        await asyncio.sleep(delay)
                         continue  # Retry on server error
                     raise PlatformError(
                         status_code=response.status_code, detail=response.text
@@ -114,9 +111,7 @@ class BaseHttpClient:
                         f"Error communicating with service: {str(e)}"
                     )
 
-                # Exponential backoff with jitter for timeouts
-                delay = (2**attempt) + random.uniform(0, 1)
-                await asyncio.sleep(delay)
+                continue
 
     async def close(self):
         await self._client.aclose()
