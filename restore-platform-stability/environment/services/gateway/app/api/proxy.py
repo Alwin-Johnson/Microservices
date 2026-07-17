@@ -1,10 +1,8 @@
-from typing import Any
 from fastapi import APIRouter, Depends, Request, Response, HTTPException
 import httpx
 import os
 
 from shared.utils.http_client import get_http_client
-from shared.config.settings import settings
 
 router = APIRouter()
 

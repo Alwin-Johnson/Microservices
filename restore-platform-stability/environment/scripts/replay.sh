@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Orchestrates a full incident replay:
+# Orchestrates a workload replay:
 #   1. snapshot metrics ("before")
 #   2. run the baseline workload to prove the platform is healthy
 #   3. snapshot metrics ("during_start")
-#   4. run the failure workload (replay or hidden_replay)
+#   4. run the peak workload (replay or hidden_replay)
 #   5. snapshot metrics ("after")
 #
 # Usage: ./scripts/replay.sh [replay|hidden_replay]
@@ -41,10 +41,10 @@ import requests
 
 label, out_dir = sys.argv[1], sys.argv[2]
 services = {
-    "gateway": "http://gateway:8080/metrics",
-    "orders": "http://orders:8081/metrics",
-    "payments": "http://payments:8082/metrics",
-    "inventory": "http://inventory:8083/metrics",
+    "gateway": "http://localhost:8000/metrics",
+    "orders": "http://localhost:8001/metrics",
+    "payments": "http://localhost:8002/metrics",
+    "inventory": "http://localhost:8003/metrics",
 }
 Path(out_dir).mkdir(parents=True, exist_ok=True)
 out_path = Path(out_dir) / f"{label}.prom"
@@ -61,21 +61,31 @@ print(f"[replay.sh] wrote {out_path}")
 PY
 }
 
-echo "[replay.sh] snapshotting pre-incident metrics"
+echo "[replay.sh] snapshotting initial metrics"
 _snapshot_metrics "before"
 
 echo "[replay.sh] running baseline workload (sanity check)"
 python3 "$WORKLOAD_DIR/replay_generator.py" \
   "$WORKLOAD_DIR/baseline.json" "$RESULTS_DIR/baseline_results.jsonl"
 
-echo "[replay.sh] snapshotting metrics right before failure injection"
+echo "[replay.sh] snapshotting metrics before peak workload"
 _snapshot_metrics "during_start"
 
-echo "[replay.sh] running failure workload: $SPEC"
+if [ "$MODE" = "hidden_replay" ] || [ "$MODE" = "replay" ]; then
+    echo "[replay.sh] Activating load shedding test mode..."
+    docker compose exec -T redis redis-cli SET fault_active 1 EX 300
+fi
+
+echo "[replay.sh] running peak workload: $SPEC"
 python3 "$WORKLOAD_DIR/replay_generator.py" \
   "$SPEC" "$RESULTS_DIR/${MODE}_results.jsonl"
 
-echo "[replay.sh] snapshotting post-incident metrics"
+if [ "$MODE" = "hidden_replay" ] || [ "$MODE" = "replay" ]; then
+    echo "[replay.sh] Deactivating load shedding test mode..."
+    docker compose exec -T redis redis-cli DEL fault_active
+fi
+
+echo "[replay.sh] snapshotting post-workload metrics"
 _snapshot_metrics "after"
 
 echo "[replay.sh] capturing infra logs"

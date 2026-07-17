@@ -1,5 +1,4 @@
-from typing import Sequence, Optional
-from uuid import UUID
+from typing import Sequence
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from shared.models.order import Order

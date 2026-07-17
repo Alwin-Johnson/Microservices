@@ -1,0 +1,568 @@
+# service=gateway url=http://localhost:8000/metrics
+# HELP python_gc_objects_collected_total Objects collected during gc
+# TYPE python_gc_objects_collected_total counter
+python_gc_objects_collected_total{generation="0"} 2679.0
+python_gc_objects_collected_total{generation="1"} 2609.0
+python_gc_objects_collected_total{generation="2"} 518.0
+# HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
+# TYPE python_gc_objects_uncollectable_total counter
+python_gc_objects_uncollectable_total{generation="0"} 0.0
+python_gc_objects_uncollectable_total{generation="1"} 0.0
+python_gc_objects_uncollectable_total{generation="2"} 0.0
+# HELP python_gc_collections_total Number of times this generation was collected
+# TYPE python_gc_collections_total counter
+python_gc_collections_total{generation="0"} 129.0
+python_gc_collections_total{generation="1"} 11.0
+python_gc_collections_total{generation="2"} 1.0
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation="CPython",major="3",minor="12",patchlevel="13",version="3.12.13"} 1.0
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+process_virtual_memory_bytes 2.47980032e+08
+# HELP process_resident_memory_bytes Resident memory size in bytes.
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 6.0792832e+07
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1.78426448635e+09
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 0.85
+# HELP process_open_fds Number of open file descriptors.
+# TYPE process_open_fds gauge
+process_open_fds 15.0
+# HELP process_max_fds Maximum number of open file descriptors.
+# TYPE process_max_fds gauge
+process_max_fds 524288.0
+# HELP http_requests_total Total HTTP requests
+# TYPE http_requests_total counter
+http_requests_total{endpoint="/health",method="GET",status_code="200"} 1.0
+http_requests_total{endpoint="/",method="GET",status_code="404"} 1.0
+# HELP http_requests_created Total HTTP requests
+# TYPE http_requests_created gauge
+http_requests_created{endpoint="/health",method="GET",status_code="200"} 1.7842644953082602e+09
+http_requests_created{endpoint="/",method="GET",status_code="404"} 1.7842645029337173e+09
+# HELP http_request_duration_seconds HTTP request latency
+# TYPE http_request_duration_seconds histogram
+http_request_duration_seconds_bucket{endpoint="/health",le="0.005",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.01",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.025",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.05",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.075",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.1",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.25",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.75",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="1.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="2.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="5.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="7.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="10.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="+Inf",method="GET"} 1.0
+http_request_duration_seconds_count{endpoint="/health",method="GET"} 1.0
+http_request_duration_seconds_sum{endpoint="/health",method="GET"} 0.0027166519998900185
+http_request_duration_seconds_bucket{endpoint="/",le="0.005",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.01",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.025",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.05",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.075",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.1",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.25",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.75",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="1.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="2.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="5.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="7.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="10.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="+Inf",method="GET"} 1.0
+http_request_duration_seconds_count{endpoint="/",method="GET"} 1.0
+http_request_duration_seconds_sum{endpoint="/",method="GET"} 0.000613159000295127
+# HELP http_request_duration_seconds_created HTTP request latency
+# TYPE http_request_duration_seconds_created gauge
+http_request_duration_seconds_created{endpoint="/health",method="GET"} 1.7842644953083174e+09
+http_request_duration_seconds_created{endpoint="/",method="GET"} 1.784264502933766e+09
+# HELP http_errors_total Total HTTP errors
+# TYPE http_errors_total counter
+# HELP checkout_duration_seconds Checkout workflow latency
+# TYPE checkout_duration_seconds histogram
+checkout_duration_seconds_bucket{le="0.005"} 0.0
+checkout_duration_seconds_bucket{le="0.01"} 0.0
+checkout_duration_seconds_bucket{le="0.025"} 0.0
+checkout_duration_seconds_bucket{le="0.05"} 0.0
+checkout_duration_seconds_bucket{le="0.075"} 0.0
+checkout_duration_seconds_bucket{le="0.1"} 0.0
+checkout_duration_seconds_bucket{le="0.25"} 0.0
+checkout_duration_seconds_bucket{le="0.5"} 0.0
+checkout_duration_seconds_bucket{le="0.75"} 0.0
+checkout_duration_seconds_bucket{le="1.0"} 0.0
+checkout_duration_seconds_bucket{le="2.5"} 0.0
+checkout_duration_seconds_bucket{le="5.0"} 0.0
+checkout_duration_seconds_bucket{le="7.5"} 0.0
+checkout_duration_seconds_bucket{le="10.0"} 0.0
+checkout_duration_seconds_bucket{le="+Inf"} 0.0
+checkout_duration_seconds_count 0.0
+checkout_duration_seconds_sum 0.0
+# HELP checkout_duration_seconds_created Checkout workflow latency
+# TYPE checkout_duration_seconds_created gauge
+checkout_duration_seconds_created 1.7842644879413195e+09
+# HELP payment_processing_duration_seconds Payment processing latency
+# TYPE payment_processing_duration_seconds histogram
+payment_processing_duration_seconds_bucket{le="0.005"} 0.0
+payment_processing_duration_seconds_bucket{le="0.01"} 0.0
+payment_processing_duration_seconds_bucket{le="0.025"} 0.0
+payment_processing_duration_seconds_bucket{le="0.05"} 0.0
+payment_processing_duration_seconds_bucket{le="0.075"} 0.0
+payment_processing_duration_seconds_bucket{le="0.1"} 0.0
+payment_processing_duration_seconds_bucket{le="0.25"} 0.0
+payment_processing_duration_seconds_bucket{le="0.5"} 0.0
+payment_processing_duration_seconds_bucket{le="0.75"} 0.0
+payment_processing_duration_seconds_bucket{le="1.0"} 0.0
+payment_processing_duration_seconds_bucket{le="2.5"} 0.0
+payment_processing_duration_seconds_bucket{le="5.0"} 0.0
+payment_processing_duration_seconds_bucket{le="7.5"} 0.0
+payment_processing_duration_seconds_bucket{le="10.0"} 0.0
+payment_processing_duration_seconds_bucket{le="+Inf"} 0.0
+payment_processing_duration_seconds_count 0.0
+payment_processing_duration_seconds_sum 0.0
+# HELP payment_processing_duration_seconds_created Payment processing latency
+# TYPE payment_processing_duration_seconds_created gauge
+payment_processing_duration_seconds_created 1.7842644879413788e+09
+# HELP outbound_http_requests_total Total outbound HTTP requests
+# TYPE outbound_http_requests_total counter
+# HELP outbound_http_request_duration_seconds Outbound HTTP request latency
+# TYPE outbound_http_request_duration_seconds histogram
+# HELP db_connections_in_use Database connections currently in use
+# TYPE db_connections_in_use gauge
+db_connections_in_use 0.0
+# HELP redis_connections_in_use Redis connections currently in use
+# TYPE redis_connections_in_use gauge
+redis_connections_in_use 0.0
+
+# service=orders url=http://localhost:8001/metrics
+# HELP python_gc_objects_collected_total Objects collected during gc
+# TYPE python_gc_objects_collected_total counter
+python_gc_objects_collected_total{generation="0"} 2795.0
+python_gc_objects_collected_total{generation="1"} 2894.0
+python_gc_objects_collected_total{generation="2"} 398.0
+# HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
+# TYPE python_gc_objects_uncollectable_total counter
+python_gc_objects_uncollectable_total{generation="0"} 0.0
+python_gc_objects_uncollectable_total{generation="1"} 0.0
+python_gc_objects_uncollectable_total{generation="2"} 0.0
+# HELP python_gc_collections_total Number of times this generation was collected
+# TYPE python_gc_collections_total counter
+python_gc_collections_total{generation="0"} 201.0
+python_gc_collections_total{generation="1"} 18.0
+python_gc_collections_total{generation="2"} 1.0
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation="CPython",major="3",minor="12",patchlevel="13",version="3.12.13"} 1.0
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+process_virtual_memory_bytes 2.71880192e+08
+# HELP process_resident_memory_bytes Resident memory size in bytes.
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 8.2010112e+07
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1.78426448617e+09
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 1.1
+# HELP process_open_fds Number of open file descriptors.
+# TYPE process_open_fds gauge
+process_open_fds 15.0
+# HELP process_max_fds Maximum number of open file descriptors.
+# TYPE process_max_fds gauge
+process_max_fds 524288.0
+# HELP http_requests_total Total HTTP requests
+# TYPE http_requests_total counter
+http_requests_total{endpoint="/health",method="GET",status_code="200"} 1.0
+http_requests_total{endpoint="/",method="GET",status_code="404"} 1.0
+# HELP http_requests_created Total HTTP requests
+# TYPE http_requests_created gauge
+http_requests_created{endpoint="/health",method="GET",status_code="200"} 1.7842644953327398e+09
+http_requests_created{endpoint="/",method="GET",status_code="404"} 1.7842645029320905e+09
+# HELP http_request_duration_seconds HTTP request latency
+# TYPE http_request_duration_seconds histogram
+http_request_duration_seconds_bucket{endpoint="/health",le="0.005",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.01",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.025",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.05",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.075",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.1",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.25",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.75",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="1.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="2.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="5.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="7.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="10.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="+Inf",method="GET"} 1.0
+http_request_duration_seconds_count{endpoint="/health",method="GET"} 1.0
+http_request_duration_seconds_sum{endpoint="/health",method="GET"} 0.002207369000188919
+http_request_duration_seconds_bucket{endpoint="/",le="0.005",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.01",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.025",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.05",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.075",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.1",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.25",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.75",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="1.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="2.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="5.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="7.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="10.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="+Inf",method="GET"} 1.0
+http_request_duration_seconds_count{endpoint="/",method="GET"} 1.0
+http_request_duration_seconds_sum{endpoint="/",method="GET"} 0.0006343850000121165
+# HELP http_request_duration_seconds_created HTTP request latency
+# TYPE http_request_duration_seconds_created gauge
+http_request_duration_seconds_created{endpoint="/health",method="GET"} 1.784264495332782e+09
+http_request_duration_seconds_created{endpoint="/",method="GET"} 1.7842645029321363e+09
+# HELP http_errors_total Total HTTP errors
+# TYPE http_errors_total counter
+# HELP checkout_duration_seconds Checkout workflow latency
+# TYPE checkout_duration_seconds histogram
+checkout_duration_seconds_bucket{le="0.005"} 0.0
+checkout_duration_seconds_bucket{le="0.01"} 0.0
+checkout_duration_seconds_bucket{le="0.025"} 0.0
+checkout_duration_seconds_bucket{le="0.05"} 0.0
+checkout_duration_seconds_bucket{le="0.075"} 0.0
+checkout_duration_seconds_bucket{le="0.1"} 0.0
+checkout_duration_seconds_bucket{le="0.25"} 0.0
+checkout_duration_seconds_bucket{le="0.5"} 0.0
+checkout_duration_seconds_bucket{le="0.75"} 0.0
+checkout_duration_seconds_bucket{le="1.0"} 0.0
+checkout_duration_seconds_bucket{le="2.5"} 0.0
+checkout_duration_seconds_bucket{le="5.0"} 0.0
+checkout_duration_seconds_bucket{le="7.5"} 0.0
+checkout_duration_seconds_bucket{le="10.0"} 0.0
+checkout_duration_seconds_bucket{le="+Inf"} 0.0
+checkout_duration_seconds_count 0.0
+checkout_duration_seconds_sum 0.0
+# HELP checkout_duration_seconds_created Checkout workflow latency
+# TYPE checkout_duration_seconds_created gauge
+checkout_duration_seconds_created 1.784264487762288e+09
+# HELP payment_processing_duration_seconds Payment processing latency
+# TYPE payment_processing_duration_seconds histogram
+payment_processing_duration_seconds_bucket{le="0.005"} 0.0
+payment_processing_duration_seconds_bucket{le="0.01"} 0.0
+payment_processing_duration_seconds_bucket{le="0.025"} 0.0
+payment_processing_duration_seconds_bucket{le="0.05"} 0.0
+payment_processing_duration_seconds_bucket{le="0.075"} 0.0
+payment_processing_duration_seconds_bucket{le="0.1"} 0.0
+payment_processing_duration_seconds_bucket{le="0.25"} 0.0
+payment_processing_duration_seconds_bucket{le="0.5"} 0.0
+payment_processing_duration_seconds_bucket{le="0.75"} 0.0
+payment_processing_duration_seconds_bucket{le="1.0"} 0.0
+payment_processing_duration_seconds_bucket{le="2.5"} 0.0
+payment_processing_duration_seconds_bucket{le="5.0"} 0.0
+payment_processing_duration_seconds_bucket{le="7.5"} 0.0
+payment_processing_duration_seconds_bucket{le="10.0"} 0.0
+payment_processing_duration_seconds_bucket{le="+Inf"} 0.0
+payment_processing_duration_seconds_count 0.0
+payment_processing_duration_seconds_sum 0.0
+# HELP payment_processing_duration_seconds_created Payment processing latency
+# TYPE payment_processing_duration_seconds_created gauge
+payment_processing_duration_seconds_created 1.784264487762345e+09
+# HELP outbound_http_requests_total Total outbound HTTP requests
+# TYPE outbound_http_requests_total counter
+# HELP outbound_http_request_duration_seconds Outbound HTTP request latency
+# TYPE outbound_http_request_duration_seconds histogram
+# HELP db_connections_in_use Database connections currently in use
+# TYPE db_connections_in_use gauge
+db_connections_in_use 0.0
+# HELP redis_connections_in_use Redis connections currently in use
+# TYPE redis_connections_in_use gauge
+redis_connections_in_use 0.0
+
+# service=payments url=http://localhost:8002/metrics
+# HELP python_gc_objects_collected_total Objects collected during gc
+# TYPE python_gc_objects_collected_total counter
+python_gc_objects_collected_total{generation="0"} 2577.0
+python_gc_objects_collected_total{generation="1"} 2779.0
+python_gc_objects_collected_total{generation="2"} 398.0
+# HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
+# TYPE python_gc_objects_uncollectable_total counter
+python_gc_objects_uncollectable_total{generation="0"} 0.0
+python_gc_objects_uncollectable_total{generation="1"} 0.0
+python_gc_objects_uncollectable_total{generation="2"} 0.0
+# HELP python_gc_collections_total Number of times this generation was collected
+# TYPE python_gc_collections_total counter
+python_gc_collections_total{generation="0"} 210.0
+python_gc_collections_total{generation="1"} 19.0
+python_gc_collections_total{generation="2"} 1.0
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation="CPython",major="3",minor="12",patchlevel="13",version="3.12.13"} 1.0
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+process_virtual_memory_bytes 2.74599936e+08
+# HELP process_resident_memory_bytes Resident memory size in bytes.
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 8.5295104e+07
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1.78426448614e+09
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 1.12
+# HELP process_open_fds Number of open file descriptors.
+# TYPE process_open_fds gauge
+process_open_fds 15.0
+# HELP process_max_fds Maximum number of open file descriptors.
+# TYPE process_max_fds gauge
+process_max_fds 524288.0
+# HELP http_requests_total Total HTTP requests
+# TYPE http_requests_total counter
+http_requests_total{endpoint="/health",method="GET",status_code="200"} 1.0
+http_requests_total{endpoint="/",method="GET",status_code="404"} 1.0
+# HELP http_requests_created Total HTTP requests
+# TYPE http_requests_created gauge
+http_requests_created{endpoint="/health",method="GET",status_code="200"} 1.7842644953568118e+09
+http_requests_created{endpoint="/",method="GET",status_code="404"} 1.7842645029395082e+09
+# HELP http_request_duration_seconds HTTP request latency
+# TYPE http_request_duration_seconds histogram
+http_request_duration_seconds_bucket{endpoint="/health",le="0.005",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.01",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.025",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.05",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.075",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.1",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.25",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.75",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="1.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="2.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="5.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="7.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="10.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="+Inf",method="GET"} 1.0
+http_request_duration_seconds_count{endpoint="/health",method="GET"} 1.0
+http_request_duration_seconds_sum{endpoint="/health",method="GET"} 0.002194448999944143
+http_request_duration_seconds_bucket{endpoint="/",le="0.005",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.01",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.025",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.05",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.075",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.1",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.25",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.75",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="1.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="2.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="5.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="7.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="10.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="+Inf",method="GET"} 1.0
+http_request_duration_seconds_count{endpoint="/",method="GET"} 1.0
+http_request_duration_seconds_sum{endpoint="/",method="GET"} 0.00041266700009146007
+# HELP http_request_duration_seconds_created HTTP request latency
+# TYPE http_request_duration_seconds_created gauge
+http_request_duration_seconds_created{endpoint="/health",method="GET"} 1.7842644953568704e+09
+http_request_duration_seconds_created{endpoint="/",method="GET"} 1.78426450293954e+09
+# HELP http_errors_total Total HTTP errors
+# TYPE http_errors_total counter
+# HELP checkout_duration_seconds Checkout workflow latency
+# TYPE checkout_duration_seconds histogram
+checkout_duration_seconds_bucket{le="0.005"} 0.0
+checkout_duration_seconds_bucket{le="0.01"} 0.0
+checkout_duration_seconds_bucket{le="0.025"} 0.0
+checkout_duration_seconds_bucket{le="0.05"} 0.0
+checkout_duration_seconds_bucket{le="0.075"} 0.0
+checkout_duration_seconds_bucket{le="0.1"} 0.0
+checkout_duration_seconds_bucket{le="0.25"} 0.0
+checkout_duration_seconds_bucket{le="0.5"} 0.0
+checkout_duration_seconds_bucket{le="0.75"} 0.0
+checkout_duration_seconds_bucket{le="1.0"} 0.0
+checkout_duration_seconds_bucket{le="2.5"} 0.0
+checkout_duration_seconds_bucket{le="5.0"} 0.0
+checkout_duration_seconds_bucket{le="7.5"} 0.0
+checkout_duration_seconds_bucket{le="10.0"} 0.0
+checkout_duration_seconds_bucket{le="+Inf"} 0.0
+checkout_duration_seconds_count 0.0
+checkout_duration_seconds_sum 0.0
+# HELP checkout_duration_seconds_created Checkout workflow latency
+# TYPE checkout_duration_seconds_created gauge
+checkout_duration_seconds_created 1.7842644877379599e+09
+# HELP payment_processing_duration_seconds Payment processing latency
+# TYPE payment_processing_duration_seconds histogram
+payment_processing_duration_seconds_bucket{le="0.005"} 0.0
+payment_processing_duration_seconds_bucket{le="0.01"} 0.0
+payment_processing_duration_seconds_bucket{le="0.025"} 0.0
+payment_processing_duration_seconds_bucket{le="0.05"} 0.0
+payment_processing_duration_seconds_bucket{le="0.075"} 0.0
+payment_processing_duration_seconds_bucket{le="0.1"} 0.0
+payment_processing_duration_seconds_bucket{le="0.25"} 0.0
+payment_processing_duration_seconds_bucket{le="0.5"} 0.0
+payment_processing_duration_seconds_bucket{le="0.75"} 0.0
+payment_processing_duration_seconds_bucket{le="1.0"} 0.0
+payment_processing_duration_seconds_bucket{le="2.5"} 0.0
+payment_processing_duration_seconds_bucket{le="5.0"} 0.0
+payment_processing_duration_seconds_bucket{le="7.5"} 0.0
+payment_processing_duration_seconds_bucket{le="10.0"} 0.0
+payment_processing_duration_seconds_bucket{le="+Inf"} 0.0
+payment_processing_duration_seconds_count 0.0
+payment_processing_duration_seconds_sum 0.0
+# HELP payment_processing_duration_seconds_created Payment processing latency
+# TYPE payment_processing_duration_seconds_created gauge
+payment_processing_duration_seconds_created 1.7842644877380195e+09
+# HELP outbound_http_requests_total Total outbound HTTP requests
+# TYPE outbound_http_requests_total counter
+# HELP outbound_http_request_duration_seconds Outbound HTTP request latency
+# TYPE outbound_http_request_duration_seconds histogram
+# HELP db_connections_in_use Database connections currently in use
+# TYPE db_connections_in_use gauge
+db_connections_in_use 0.0
+# HELP redis_connections_in_use Redis connections currently in use
+# TYPE redis_connections_in_use gauge
+redis_connections_in_use 0.0
+
+# service=inventory url=http://localhost:8003/metrics
+# HELP python_gc_objects_collected_total Objects collected during gc
+# TYPE python_gc_objects_collected_total counter
+python_gc_objects_collected_total{generation="0"} 2436.0
+python_gc_objects_collected_total{generation="1"} 2928.0
+python_gc_objects_collected_total{generation="2"} 398.0
+# HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
+# TYPE python_gc_objects_uncollectable_total counter
+python_gc_objects_uncollectable_total{generation="0"} 0.0
+python_gc_objects_uncollectable_total{generation="1"} 0.0
+python_gc_objects_uncollectable_total{generation="2"} 0.0
+# HELP python_gc_collections_total Number of times this generation was collected
+# TYPE python_gc_collections_total counter
+python_gc_collections_total{generation="0"} 200.0
+python_gc_collections_total{generation="1"} 18.0
+python_gc_collections_total{generation="2"} 1.0
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation="CPython",major="3",minor="12",patchlevel="13",version="3.12.13"} 1.0
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+process_virtual_memory_bytes 2.7183104e+08
+# HELP process_resident_memory_bytes Resident memory size in bytes.
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 8.2259968e+07
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1.78426448611e+09
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 1.07
+# HELP process_open_fds Number of open file descriptors.
+# TYPE process_open_fds gauge
+process_open_fds 15.0
+# HELP process_max_fds Maximum number of open file descriptors.
+# TYPE process_max_fds gauge
+process_max_fds 524288.0
+# HELP http_requests_total Total HTTP requests
+# TYPE http_requests_total counter
+http_requests_total{endpoint="/health",method="GET",status_code="200"} 1.0
+http_requests_total{endpoint="/",method="GET",status_code="404"} 1.0
+# HELP http_requests_created Total HTTP requests
+# TYPE http_requests_created gauge
+http_requests_created{endpoint="/health",method="GET",status_code="200"} 1.7842644953797996e+09
+http_requests_created{endpoint="/",method="GET",status_code="404"} 1.7842645029305484e+09
+# HELP http_request_duration_seconds HTTP request latency
+# TYPE http_request_duration_seconds histogram
+http_request_duration_seconds_bucket{endpoint="/health",le="0.005",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.01",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.025",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.05",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.075",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.1",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.25",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="0.75",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="1.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="2.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="5.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="7.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="10.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/health",le="+Inf",method="GET"} 1.0
+http_request_duration_seconds_count{endpoint="/health",method="GET"} 1.0
+http_request_duration_seconds_sum{endpoint="/health",method="GET"} 0.0017026929999701679
+http_request_duration_seconds_bucket{endpoint="/",le="0.005",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.01",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.025",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.05",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.075",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.1",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.25",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="0.75",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="1.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="2.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="5.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="7.5",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="10.0",method="GET"} 1.0
+http_request_duration_seconds_bucket{endpoint="/",le="+Inf",method="GET"} 1.0
+http_request_duration_seconds_count{endpoint="/",method="GET"} 1.0
+http_request_duration_seconds_sum{endpoint="/",method="GET"} 0.0006197120001161238
+# HELP http_request_duration_seconds_created HTTP request latency
+# TYPE http_request_duration_seconds_created gauge
+http_request_duration_seconds_created{endpoint="/health",method="GET"} 1.7842644953798385e+09
+http_request_duration_seconds_created{endpoint="/",method="GET"} 1.784264502930644e+09
+# HELP http_errors_total Total HTTP errors
+# TYPE http_errors_total counter
+# HELP checkout_duration_seconds Checkout workflow latency
+# TYPE checkout_duration_seconds histogram
+checkout_duration_seconds_bucket{le="0.005"} 0.0
+checkout_duration_seconds_bucket{le="0.01"} 0.0
+checkout_duration_seconds_bucket{le="0.025"} 0.0
+checkout_duration_seconds_bucket{le="0.05"} 0.0
+checkout_duration_seconds_bucket{le="0.075"} 0.0
+checkout_duration_seconds_bucket{le="0.1"} 0.0
+checkout_duration_seconds_bucket{le="0.25"} 0.0
+checkout_duration_seconds_bucket{le="0.5"} 0.0
+checkout_duration_seconds_bucket{le="0.75"} 0.0
+checkout_duration_seconds_bucket{le="1.0"} 0.0
+checkout_duration_seconds_bucket{le="2.5"} 0.0
+checkout_duration_seconds_bucket{le="5.0"} 0.0
+checkout_duration_seconds_bucket{le="7.5"} 0.0
+checkout_duration_seconds_bucket{le="10.0"} 0.0
+checkout_duration_seconds_bucket{le="+Inf"} 0.0
+checkout_duration_seconds_count 0.0
+checkout_duration_seconds_sum 0.0
+# HELP checkout_duration_seconds_created Checkout workflow latency
+# TYPE checkout_duration_seconds_created gauge
+checkout_duration_seconds_created 1.78426448765786e+09
+# HELP payment_processing_duration_seconds Payment processing latency
+# TYPE payment_processing_duration_seconds histogram
+payment_processing_duration_seconds_bucket{le="0.005"} 0.0
+payment_processing_duration_seconds_bucket{le="0.01"} 0.0
+payment_processing_duration_seconds_bucket{le="0.025"} 0.0
+payment_processing_duration_seconds_bucket{le="0.05"} 0.0
+payment_processing_duration_seconds_bucket{le="0.075"} 0.0
+payment_processing_duration_seconds_bucket{le="0.1"} 0.0
+payment_processing_duration_seconds_bucket{le="0.25"} 0.0
+payment_processing_duration_seconds_bucket{le="0.5"} 0.0
+payment_processing_duration_seconds_bucket{le="0.75"} 0.0
+payment_processing_duration_seconds_bucket{le="1.0"} 0.0
+payment_processing_duration_seconds_bucket{le="2.5"} 0.0
+payment_processing_duration_seconds_bucket{le="5.0"} 0.0
+payment_processing_duration_seconds_bucket{le="7.5"} 0.0
+payment_processing_duration_seconds_bucket{le="10.0"} 0.0
+payment_processing_duration_seconds_bucket{le="+Inf"} 0.0
+payment_processing_duration_seconds_count 0.0
+payment_processing_duration_seconds_sum 0.0
+# HELP payment_processing_duration_seconds_created Payment processing latency
+# TYPE payment_processing_duration_seconds_created gauge
+payment_processing_duration_seconds_created 1.78426448765792e+09
+# HELP outbound_http_requests_total Total outbound HTTP requests
+# TYPE outbound_http_requests_total counter
+# HELP outbound_http_request_duration_seconds Outbound HTTP request latency
+# TYPE outbound_http_request_duration_seconds histogram
+# HELP db_connections_in_use Database connections currently in use
+# TYPE db_connections_in_use gauge
+db_connections_in_use 0.0
+# HELP redis_connections_in_use Redis connections currently in use
+# TYPE redis_connections_in_use gauge
+redis_connections_in_use 0.0
+

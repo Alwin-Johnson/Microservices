@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "restore-platform-stability"
 version = "0.1.0"
-description = "Production-grade distributed e-commerce platform for Triton benchmark simulation."
+description = "Production-grade distributed e-commerce platform."
 readme = "README.md"
 requires-python = ">=3.12"
 license = { text = "MIT" }

@@ -1,0 +1,16 @@
+{
+  "name": "spike",
+  "description": "Sudden massive spike in traffic (e.g. flash sale)",
+  "duration_seconds": 60,
+  "target_base_url": "http://localhost:8000",
+  "concurrency": 20,
+  "phases": [
+    {"start_s": 0, "end_s": 15, "requests_per_second": 2},
+    {"start_s": 15, "end_s": 30, "requests_per_second": 30},
+    {"start_s": 30, "end_s": 60, "requests_per_second": 2}
+  ],
+  "endpoints": [
+    {"method": "POST", "path": "/checkout", "weight": 10, "payload_template": "checkout_small"}
+  ],
+  "seed": 100
+}

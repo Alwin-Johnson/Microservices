@@ -1,8 +1,9 @@
 {
   "name": "failure_replay",
-  "description": "Reproduces the production incident: a sustained burst of checkout traffic well above baseline rate, long enough to exhaust the simulated resource pool and trigger retry amplification.",
+  "description": "A sustained burst of checkout traffic well above baseline rate.",
+  "concurrency": 100,
   "duration_seconds": 300,
-  "target_base_url": "http://gateway:8080",
+  "target_base_url": "http://localhost:8000",
   "phases": [
     {"label": "ramp", "start_s": 0, "end_s": 30, "requests_per_second": 4},
     {"label": "burst", "start_s": 30, "end_s": 240, "requests_per_second": 22},

@@ -1,0 +1,14 @@
+{
+  "name": "normal",
+  "description": "Steady baseline traffic representing normal daily operations",
+  "duration_seconds": 60,
+  "target_base_url": "http://localhost:8000",
+  "concurrency": 5,
+  "phases": [
+    {"start_s": 0, "end_s": 60, "requests_per_second": 2}
+  ],
+  "endpoints": [
+    {"method": "POST", "path": "/checkout", "weight": 10, "payload_template": "checkout_small"}
+  ],
+  "seed": 42
+}

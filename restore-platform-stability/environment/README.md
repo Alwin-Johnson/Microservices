@@ -2,7 +2,6 @@
 
 A production-grade distributed e-commerce platform built on a microservices architecture.
 
-This repository serves as the foundation for a Triton benchmark that will simulate a real production incident involving cascading service failures under partial dependency degradation.
 
 ---
 

@@ -1,8 +1,9 @@
 {
   "name": "hidden_replay",
-  "description": "Held-out variant of the failure replay used only by the verifier. Same qualitative shape as replay.json (a sustained burst above the trip threshold) but with different timing, rate, and seed, so a fix that hardcodes replay.json's exact numbers will not pass.",
+  "description": "A variant of the sustained burst workload.",
+  "concurrency": 100,
   "duration_seconds": 260,
-  "target_base_url": "http://gateway:8080",
+  "target_base_url": "http://localhost:8000",
   "phases": [
     {"label": "ramp", "start_s": 0, "end_s": 20, "requests_per_second": 5},
     {"label": "burst", "start_s": 20, "end_s": 200, "requests_per_second": 19},

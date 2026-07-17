@@ -1,8 +1,9 @@
 {
   "name": "baseline",
-  "description": "Steady low-volume traffic representative of normal operating conditions. Must never trip the seeded incident.",
+  "description": "Steady low-volume traffic representative of normal operating conditions.",
+  "concurrency": 100,
   "duration_seconds": 120,
-  "target_base_url": "http://gateway:8080",
+  "target_base_url": "http://localhost:8000",
   "arrival": {
     "type": "poisson",
     "requests_per_second": 4

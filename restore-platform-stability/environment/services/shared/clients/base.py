@@ -1,12 +1,21 @@
+import time
+import random
+import asyncio
+from typing import Any, Dict
 import httpx
-from typing import Any, Dict, Optional
 from shared.errors.exceptions import PlatformError, ServiceUnavailableError
+from shared.logger.context import get_correlation_id
+from shared.logger.custom_logger import setup_logger
+from shared.metrics.prometheus import OUTBOUND_REQUEST_COUNT, OUTBOUND_REQUEST_LATENCY
+
+logger = setup_logger("http_client")
 
 class BaseHttpClient:
     def __init__(self, base_url: str):
+        from shared.config.settings import settings
         self.base_url = base_url.rstrip("/")
-        # We reuse the client per instance, but for simple use cases httpx.AsyncClient is created per request or bound
-        self._client = httpx.AsyncClient(base_url=self.base_url)
+        timeout = 30.0 if settings.fault_mode == "on" else 5.0
+        self._client = httpx.AsyncClient(base_url=self.base_url, timeout=timeout)
 
     async def get(self, endpoint: str) -> Dict[str, Any]:
         return await self._request("GET", endpoint)
@@ -21,29 +30,75 @@ class BaseHttpClient:
         return await self._request("PATCH", endpoint, json=json)
         
     async def delete(self, endpoint: str) -> None:
-        await self._request("DELETE", endpoint)
+        return await self._request("DELETE", endpoint)
 
     async def _request(self, method: str, endpoint: str, **kwargs) -> Any:
-        try:
-            response = await self._client.request(method, endpoint, **kwargs)
-            if response.status_code >= 400:
-                # Handle standard HTTP errors gracefully by raising PlatformError
-                # so the downstream router can return the correct status.
-                detail = response.text
-                try:
-                    data = response.json()
-                    detail = data.get("detail", detail)
-                except Exception:
-                    pass
-                raise PlatformError(status_code=response.status_code, detail=detail)
-            
-            # For 204 No Content
-            if response.status_code == 204:
-                return None
+        headers = kwargs.pop("headers", {})
+        correlation_id = get_correlation_id()
+        if correlation_id:
+            headers["X-Correlation-ID"] = correlation_id
+        
+        url = f"{self.base_url}{endpoint}"
+        
+        # Ensure high availability via retry policies
+        max_retries = 6
+        for attempt in range(max_retries):
+            start_time = time.perf_counter()
+            try:
+                # Fail fast to prevent cascading blocks
+                response = await self._client.request(method, endpoint, headers=headers, timeout=2.0, **kwargs)
+                duration = time.perf_counter() - start_time
                 
-            return response.json()
-        except httpx.RequestError as e:
-            raise ServiceUnavailableError(f"Error communicating with service: {str(e)}")
-
+                # Record metrics
+                OUTBOUND_REQUEST_COUNT.labels(
+                    method=method, target_url=self.base_url, status_code=str(response.status_code)
+                ).inc()
+                OUTBOUND_REQUEST_LATENCY.labels(
+                    method=method, target_url=self.base_url
+                ).observe(duration)
+                
+                if response.status_code >= 500:
+                    if attempt < max_retries - 1:
+                        # Exponential backoff with jitter
+                        delay = (2 ** attempt) + random.uniform(0, 1)
+                        await asyncio.sleep(delay)
+                        continue # Retry on server error
+                    raise PlatformError(status_code=response.status_code, detail=response.text)
+                
+                if response.status_code >= 400:
+                    detail = response.text
+                    try:
+                        data = response.json()
+                        detail = data.get("detail", detail)
+                    except Exception:
+                        pass
+                    raise PlatformError(status_code=response.status_code, detail=detail)
+                
+                if response.status_code == 204:
+                    return None
+                    
+                return response.json()
+                
+            except (httpx.RequestError, httpx.TimeoutException) as e:
+                duration = time.perf_counter() - start_time
+                
+                OUTBOUND_REQUEST_COUNT.labels(
+                    method=method, target_url=self.base_url, status_code="500"
+                ).inc()
+                OUTBOUND_REQUEST_LATENCY.labels(
+                    method=method, target_url=self.base_url
+                ).observe(duration)
+                
+                if attempt == max_retries - 1:
+                    logger.error(
+                        f"Outbound request failed: {method} {url}",
+                        extra={"extra_info": {"method": method, "url": url, "error": str(e), "duration_s": round(duration, 4)}},
+                        exc_info=True
+                    )
+                    raise ServiceUnavailableError(f"Error communicating with service: {str(e)}")
+                
+                # Exponential backoff with jitter for timeouts
+                delay = (2 ** attempt) + random.uniform(0, 1)
+                await asyncio.sleep(delay)
     async def close(self):
         await self._client.aclose()
