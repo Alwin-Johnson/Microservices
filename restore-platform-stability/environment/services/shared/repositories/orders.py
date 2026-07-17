@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from shared.models.order import Order
 from shared.repositories.base import BaseRepository
 
+
 class OrderRepository(BaseRepository[Order]):
     def __init__(self, session: AsyncSession):
         super().__init__(Order, session)

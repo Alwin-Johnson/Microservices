@@ -4,9 +4,11 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 async def check_db_connection(session: AsyncSession) -> bool:
     """Check if the database connection is healthy."""
     from shared.db.session import SessionLocal
+
     if not SessionLocal:
         return False
     try:

@@ -1,0 +1,18 @@
+[task]
+name = "restore-platform-stability"
+category = "Backend Engineering"
+difficulty = "hard"
+
+[environment]
+os = "linux"
+dependencies = ["docker", "docker-compose", "python3"]
+
+[timeouts]
+agent_timeout = 7200
+verifier_timeout = 300
+
+[verifier]
+entrypoint = "tests/test.sh"
+
+[oracle]
+entrypoint = "solution/solve.sh"

@@ -12,5 +12,5 @@ __all__ = [
     "Order",
     "Payment",
     "InventoryItem",
-    "InventoryReservation"
+    "InventoryReservation",
 ]

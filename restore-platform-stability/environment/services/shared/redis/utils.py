@@ -4,6 +4,7 @@ from shared.config.settings import settings
 
 logger = logging.getLogger(__name__)
 
+
 async def check_redis_connection() -> bool:
     """Check if the Redis connection is healthy."""
     if not settings.redis_url:

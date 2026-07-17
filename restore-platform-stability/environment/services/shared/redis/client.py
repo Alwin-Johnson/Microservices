@@ -9,8 +9,11 @@ if settings.redis_url:
     redis_client = redis.from_url(settings.redis_url, decode_responses=True)
     # Set the gauge to read from the pool size dynamically
     REDIS_CONNECTIONS_IN_USE.set_function(
-        lambda: len(redis_client.connection_pool._in_use_connections) if redis_client else 0
+        lambda: len(redis_client.connection_pool._in_use_connections)
+        if redis_client
+        else 0
     )
+
 
 async def get_redis() -> AsyncGenerator[redis.Redis, None]:
     """FastAPI dependency for Redis async client."""

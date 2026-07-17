@@ -1,8 +1,12 @@
 from uuid import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from shared.models.enums import ReservationStatus
-from shared.repositories.inventory import InventoryItemRepository, InventoryReservationRepository
+from shared.repositories.inventory import (
+    InventoryItemRepository,
+    InventoryReservationRepository,
+)
 from shared.errors.exceptions import NotFoundError, ValidationError
+
 
 class InventoryService:
     def __init__(self, session: AsyncSession):
@@ -19,7 +23,7 @@ class InventoryService:
     async def reserve_stock(self, order_id: UUID, sku: str, quantity: int) -> dict:
         if quantity <= 0:
             raise ValidationError("Quantity must be greater than zero.")
-            
+
         item = await self.item_repo.get_by_sku(sku, for_update=True)
         if not item:
             raise NotFoundError(f"Item with SKU {sku} not found.")
@@ -29,15 +33,19 @@ class InventoryService:
 
         # Deduct stock
         item.quantity_available -= quantity
-        await self.item_repo.update(item.id, {"quantity_available": item.quantity_available})
+        await self.item_repo.update(
+            item.id, {"quantity_available": item.quantity_available}
+        )
 
         # Create reservation
-        reservation = await self.reservation_repo.create({
-            "order_id": order_id,
-            "item_id": item.id,
-            "quantity": quantity,
-            "status": ReservationStatus.CONFIRMED
-        })
+        reservation = await self.reservation_repo.create(
+            {
+                "order_id": order_id,
+                "item_id": item.id,
+                "quantity": quantity,
+                "status": ReservationStatus.CONFIRMED,
+            }
+        )
 
         return reservation
 
@@ -45,14 +53,18 @@ class InventoryService:
         reservation = await self.reservation_repo.get(reservation_id)
         if not reservation:
             raise NotFoundError("Reservation not found.")
-            
+
         if reservation.status != ReservationStatus.CONFIRMED:
             raise ValidationError("Only confirmed reservations can be cancelled.")
 
         item = await self.item_repo.get(reservation.item_id, for_update=True)
         if item:
             item.quantity_available += reservation.quantity
-            await self.item_repo.update(item.id, {"quantity_available": item.quantity_available})
+            await self.item_repo.update(
+                item.id, {"quantity_available": item.quantity_available}
+            )
 
         reservation.status = ReservationStatus.CANCELLED
-        await self.reservation_repo.update(reservation.id, {"status": reservation.status})
+        await self.reservation_repo.update(
+            reservation.id, {"status": reservation.status}
+        )

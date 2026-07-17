@@ -6,12 +6,15 @@ from shared.db.base import Base
 
 ModelType = TypeVar("ModelType", bound=Base)
 
+
 class BaseRepository(Generic[ModelType]):
     def __init__(self, model: Type[ModelType], session: AsyncSession):
         self.model = model
         self.session = session
 
-    async def get(self, id: UUID | str, for_update: bool = False) -> Optional[ModelType]:
+    async def get(
+        self, id: UUID | str, for_update: bool = False
+    ) -> Optional[ModelType]:
         stmt = select(self.model).where(self.model.id == id)
         if for_update:
             stmt = stmt.with_for_update()
@@ -28,14 +31,16 @@ class BaseRepository(Generic[ModelType]):
         await self.session.flush()
         return db_obj
 
-    async def update(self, id: UUID | str, obj_in: Dict[str, Any]) -> Optional[ModelType]:
+    async def update(
+        self, id: UUID | str, obj_in: Dict[str, Any]
+    ) -> Optional[ModelType]:
         db_obj = await self.get(id)
         if not db_obj:
             return None
-            
+
         for key, value in obj_in.items():
             setattr(db_obj, key, value)
-            
+
         self.session.add(db_obj)
         await self.session.flush()
         return db_obj
