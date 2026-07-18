@@ -16,18 +16,7 @@
 # Use bash for all shell commands
 SHELL := /bin/bash
 
-# Docker host — uses podman socket for rootless operation if available,
-# falls back to the system Docker socket.
-PODMAN_SOCK := /run/user/$(shell id -u)/podman/podman.sock
-DOCKER_SOCK := /var/run/docker.sock
 
-ifneq ("$(wildcard $(PODMAN_SOCK))","")
-  DOCKER_HOST := unix://$(PODMAN_SOCK)
-else
-  DOCKER_HOST := unix://$(DOCKER_SOCK)
-endif
-
-export DOCKER_HOST
 
 COMPOSE := docker compose
 

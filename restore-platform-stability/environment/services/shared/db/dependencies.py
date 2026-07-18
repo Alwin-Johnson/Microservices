@@ -24,7 +24,7 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
                 "Database transaction committed.",
                 extra={"extra_info": {"duration_s": round(duration, 4)}},
             )
-        except Exception as e:
+        except BaseException as e:
             await session.rollback()
             duration = time.perf_counter() - start_time
             logger.error(
@@ -36,3 +36,4 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
             raise
         finally:
             await session.close()
+

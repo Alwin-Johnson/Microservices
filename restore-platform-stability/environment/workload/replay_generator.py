@@ -79,7 +79,7 @@ def generate_schedule(spec: dict):
     return schedule
 
 
-async def worker(worker_id, client, queue, results):
+async def worker(worker_id, client, queue, results, out_file):
     while True:
         task = await queue.get()
         if task is None:
@@ -107,16 +107,17 @@ async def worker(worker_id, client, queue, results):
 
         duration_ms = round((time.perf_counter() - start_perf) * 1000, 2)
 
-        results.append(
-            {
-                "t": round(scheduled_time, 3),
-                "correlation_id": cid,
-                "method": method,
-                "path": task["path"],
-                "status": status,
-                "duration_ms": duration_ms,
-            }
-        )
+        record = {
+            "t": round(scheduled_time, 3),
+            "correlation_id": cid,
+            "method": method,
+            "path": task["path"],
+            "status": status,
+            "duration_ms": duration_ms,
+        }
+        results.append(record)
+        out_file.write(json.dumps(record) + "\n")
+        out_file.flush()
         queue.task_done()
 
 
@@ -135,33 +136,30 @@ async def async_run(spec_path: str, out_path: str):
     limits = httpx.Limits(
         max_connections=concurrency, max_keepalive_connections=concurrency
     )
-    async with httpx.AsyncClient(limits=limits) as client:
-        workers = [
-            asyncio.create_task(worker(i, client, queue, results))
-            for i in range(concurrency)
-        ]
+    with open(out_path, "w") as out_file:
+        async with httpx.AsyncClient(limits=limits) as client:
+            workers = [
+                asyncio.create_task(worker(i, client, queue, results, out_file))
+                for i in range(concurrency)
+            ]
 
-        t0 = time.time()
+            t0 = time.time()
 
-        for req in schedule:
-            fire_at = req["fire_at"]
-            now = time.time() - t0
-            if now < fire_at:
-                await asyncio.sleep(fire_at - now)
+            for req in schedule:
+                fire_at = req["fire_at"]
+                now = time.time() - t0
+                if now < fire_at:
+                    await asyncio.sleep(fire_at - now)
 
-            req["url"] = base_url + req["path"]
-            req["actual_fire_time"] = time.time() - t0
-            await queue.put(req)
+                req["url"] = base_url + req["path"]
+                req["actual_fire_time"] = time.time() - t0
+                await queue.put(req)
 
-        await queue.join()
+            await queue.join()
 
-        for _ in range(concurrency):
-            await queue.put(None)
-        await asyncio.gather(*workers)
-
-    with open(out_path, "w") as f:
-        for r in sorted(results, key=lambda x: x["t"]):
-            f.write(json.dumps(r) + "\n")
+            for _ in range(concurrency):
+                await queue.put(None)
+            await asyncio.gather(*workers)
 
     error_rate = sum(1 for r in results if r["status"] < 0 or r["status"] >= 500) / max(
         1, len(results)

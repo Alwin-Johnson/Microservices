@@ -11,14 +11,14 @@ Identify and fix the root cause of a cascading platform lockup in the microservi
 5. **Functional correctness**: Public APIs must remain available and correct under all standard conditions.
 
 ## Setup
-The platform is located in `/workspace/environment/`.
-- Run `cd /workspace/environment && ./scripts/start.sh` to boot the stack.
-- Workload generator profiles are in `/workspace/environment/workload/`.
+The platform is located in `/app/environment/`.
+- Run `cd /app/environment && ./scripts/start.sh` to boot the stack.
+- Workload generator profiles are in `/app/environment/workload/`.
 
 ## Evaluation
 Your solution will be tested against:
-1. A baseline traffic profile.
+1. A baseline traffic profile (`baseline.json`).
 2. A degraded traffic profile (fault injected).
-3. A peak traffic profile (incident reproduction).
+3. A peak traffic profile (`replay.json`).
 4. Strict database consistency assertions.
-5. Strict anti-cheat workload verifications.
+5. Strict anti-cheat workload verifications (including `hidden_replay.json` and `replay_generator.py`).

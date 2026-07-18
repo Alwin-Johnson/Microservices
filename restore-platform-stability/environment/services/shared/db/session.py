@@ -8,7 +8,6 @@ engine = (
         settings.database_url,
         pool_size=40,
         max_overflow=10,
-        pool_reset_on_return=None,
         echo=False,
     )
     if settings.database_url

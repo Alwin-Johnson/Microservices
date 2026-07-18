@@ -42,14 +42,17 @@ class BaseHttpClient:
 
         url = f"{self.base_url}{endpoint}"
 
-        # Ensure high availability via retry policies
-        max_retries = 6
+        # Retry only safe idempotent methods (never retry POST — it is not idempotent
+        # and retrying would create duplicate orders / payments).
+        _IDEMPOTENT = {"GET", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"}
+        max_retries = 3 if method.upper() in _IDEMPOTENT else 1
+
         for attempt in range(max_retries):
             start_time = time.perf_counter()
             try:
-                # Fail fast to prevent cascading blocks
+                # Use the client's default timeout (which is aware of fault_mode)
                 response = await self._client.request(
-                    method, endpoint, headers=headers, timeout=2.0, **kwargs
+                    method, endpoint, headers=headers, **kwargs
                 )
                 duration = time.perf_counter() - start_time
 
@@ -65,7 +68,10 @@ class BaseHttpClient:
 
                 if response.status_code >= 500:
                     if attempt < max_retries - 1:
-                        continue  # Retry on server error
+                        # Bounded backoff: cap at 1 second to avoid request starvation
+                        delay = min(0.5 * (2**attempt), 1.0) + random.uniform(0, 0.1)
+                        await asyncio.sleep(delay)
+                        continue  # Retry on server error (idempotent methods only)
                     raise PlatformError(
                         status_code=response.status_code, detail=response.text
                     )
@@ -111,7 +117,10 @@ class BaseHttpClient:
                         f"Error communicating with service: {str(e)}"
                     )
 
-                continue
+                # Bounded backoff with jitter (capped at 1 second)
+                delay = min(0.5 * (2**attempt), 1.0) + random.uniform(0, 0.1)
+                await asyncio.sleep(delay)
 
     async def close(self):
         await self._client.aclose()
+

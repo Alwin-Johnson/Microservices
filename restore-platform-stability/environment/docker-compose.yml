@@ -20,6 +20,8 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./database/seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
     networks:
       - platform
     healthcheck:
@@ -62,8 +64,6 @@ services:
     environment:
       DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:${POSTGRES_PORT}/${POSTGRES_DB}
       REDIS_URL: redis://redis:${REDIS_PORT}/${REDIS_DB}
-    ports:
-      - "8001:8001"
     networks:
       - platform
     depends_on:
@@ -72,7 +72,7 @@ services:
       redis:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8001/"]
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
       interval: 15s
       timeout: 5s
       retries: 5
@@ -90,8 +90,6 @@ services:
     environment:
       DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:${POSTGRES_PORT}/${POSTGRES_DB}
       REDIS_URL: redis://redis:${REDIS_PORT}/${REDIS_DB}
-    ports:
-      - "8002:8002"
     networks:
       - platform
     depends_on:
@@ -100,7 +98,7 @@ services:
       redis:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8002/"]
+      test: ["CMD", "curl", "-f", "http://localhost:8002/health"]
       interval: 15s
       timeout: 5s
       retries: 5
@@ -118,8 +116,6 @@ services:
     environment:
       DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:${POSTGRES_PORT}/${POSTGRES_DB}
       REDIS_URL: redis://redis:${REDIS_PORT}/${REDIS_DB}
-    ports:
-      - "8003:8003"
     networks:
       - platform
     depends_on:
@@ -128,7 +124,7 @@ services:
       redis:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8003/"]
+      test: ["CMD", "curl", "-f", "http://localhost:8003/health"]
       interval: 15s
       timeout: 5s
       retries: 5
@@ -159,7 +155,7 @@ services:
       inventory:
         condition: service_started
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 15s
       timeout: 5s
       retries: 5

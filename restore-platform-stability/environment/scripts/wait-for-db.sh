@@ -5,10 +5,7 @@ cd "$(dirname "$0")/.."
 
 echo "Waiting for PostgreSQL to be ready..."
 
-# Support rootless podman
-if [ -S "/run/user/$(id -u)/podman/podman.sock" ]; then
-    export DOCKER_HOST="unix:///run/user/$(id -u)/podman/podman.sock"
-fi
+
 
 MAX_RETRIES=30
 COUNTER=0
@@ -25,6 +22,13 @@ while ! docker compose exec -T postgres pg_isready -U ecommerce_user -d ecommerc
 done
 
 echo "PostgreSQL is ready!"
+
+echo "Verifying database schema and seed data..."
+docker compose exec -T postgres psql -U ecommerce_user -d ecommerce -c "SELECT 1 FROM inventory_items LIMIT 1;" > /dev/null 2>&1 || {
+    echo "Applying schema and seed data..."
+    docker compose exec -T postgres psql -U ecommerce_user -d ecommerce < database/schema.sql || true
+    docker compose exec -T postgres psql -U ecommerce_user -d ecommerce < database/seed.sql || true
+}
 
 echo "Waiting for Redis to be ready..."
 COUNTER=0

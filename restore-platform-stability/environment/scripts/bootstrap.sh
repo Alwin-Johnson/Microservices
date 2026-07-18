@@ -12,10 +12,7 @@ if [ ! -f .env ]; then
     cp .env.example .env
 fi
 
-# Support rootless podman
-if [ -S "/run/user/$(id -u)/podman/podman.sock" ]; then
-    export DOCKER_HOST="unix:///run/user/$(id -u)/podman/podman.sock"
-fi
+
 
 echo "Building service images..."
 docker compose build
